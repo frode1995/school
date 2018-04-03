@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>school</title>
+</head>
+<script src="js/jquery.js"></script>
+<body>
+
+帐号<input type="text" id="name"><br>
+密码<input type="password" id="pwd"><br>
+<input type="submit" value="提交" id="login">
+
+<script>
+    var oName = $('#name').val()//帐号值
+    var oPassword = $('#pwd').val()//密码值
+    $('#login').click(function () { //sign in点击事件
+        $.ajax({
+            type: "post",
+            url: 'http://127.0.0.1:8060/school/superadmin/login', //ajax请求url
+            //      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
+            data: {
+                //"name": oName,
+                //"password":oPassword,//将输入的密码传入后台
+                "id": oName //将输入的id传入后台
+            }, //id=name可以直接取
+            //cache: false,
+            //async: false, //关闭异步
+            dataType: "json",
+            success: function (res) {
+                var pwd = res.superAdminPO.password //得到res这个返回结果json中的key为superAdminPO的对象的password属性
+                if (pwd == oPassword) {
+                    alert("登录成功")
+                    //window.location.href="http://www.baidu.com"//跳转页面
+                } else {
+                    alert("登录失败")
+                }
+
+            }
+        })
+    })
+
+</script>
+
+
+</body>
+</html>
